@@ -1,0 +1,3 @@
+scikit_learn==0.22.1
+git+git://github.com/nccr-itmo/FEDOT@preprocessing-refactor#egg=fedot
+
