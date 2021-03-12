@@ -9,7 +9,6 @@ that will be integrated into Fedot.
 
 This is an ongoing research.
 
-============
 
 Current progress
 ============
@@ -18,7 +17,6 @@ in FEDOT and some promising results were obtained.
 For instance, check `our fresh paper <https://arxiv.org/abs/2103.01124>`__
 about timeseries gap filling with FEDOT.
 
-============
 
 Supported by
 ============
