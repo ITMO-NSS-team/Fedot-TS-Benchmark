@@ -1,4 +1,6 @@
 scikit_learn==0.22.1
 pandas==1.2.3
+AutoTS==0.3.0
+fredapi==0.4.3
 git+git://github.com/nccr-itmo/FEDOT@preprocessing-refactor#egg=fedot
 
