@@ -8,3 +8,5 @@
 8) Weekly U.S. Field Production of Crude Oil (Thousand Barrels per Day) (weekly)
 9) Weekly U.S. Ending Stocks of Crude Oil and Petroleum Products (Thousand Barrels) (weekly)
 10) Weekly U.S. Product Supplied of Finished Motor Gasoline (Thousand Barrels per Day) (weekly)
+11) temp - temperature (hourly)
+12) traffic_volume - Traffic data from the MN DOT via the UCI data repository (hourly)
