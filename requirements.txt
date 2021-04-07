@@ -1,3 +1,6 @@
 scikit_learn==0.22.1
+auto-ts==0.0.36
+autots==0.3.0
+fbprophet==0.7.1
 git+git://github.com/nccr-itmo/FEDOT@preprocessing-refactor#egg=fedot
 

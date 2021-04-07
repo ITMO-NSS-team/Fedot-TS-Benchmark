@@ -1,0 +1,11 @@
+Models,MAE,MAPE,Time series label,Time
+Prophet,0.5966233153025057,25.3955410733743,GS10,40.10449529999994
+Prophet,0.804301772667489,11.861339643512176,EXCHUS,21.282990499999983
+Prophet,0.24142744716692033,18.34432905961334,EXCAUS,29.468264599999998
+Prophet,266.1205249005284,2.71709198587336,Weekly U.S. Refiner and Blender Adjusted Net Production of Finished Motor Gasoline  (Thousand Barrels per Day),12.866139999999973
+Prophet,0.43178121702947714,15.98277808109764,Weekly Minnesota Midgrade Conventional Retail Gasoline Prices  (Dollars per Gallon),18.334008599999947
+Prophet,2.9441557053894547,3.2494460903144575,Weekly U.S. Percent Utilization of Refinery Operable Capacity (Percent),14.871264299999893
+Prophet,692.1818215122204,8.071976964397074,Weekly U.S. Exports of Crude Oil and Petroleum Products  (Thousand Barrels per Day),64.6075201000001
+Prophet,1591.5962883387315,12.723309412338441,Weekly U.S. Field Production of Crude Oil  (Thousand Barrels per Day),16.789697299999943
+Prophet,34202.63338548,1.7944569657431138,Weekly U.S. Ending Stocks of Crude Oil and Petroleum Products  (Thousand Barrels),17.098065099999985
+Prophet,328.3222205283648,3.533943658404403,Weekly U.S. Product Supplied of Finished Motor Gasoline  (Thousand Barrels per Day),16.456545799999958

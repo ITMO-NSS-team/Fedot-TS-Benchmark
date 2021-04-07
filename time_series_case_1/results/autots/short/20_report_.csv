@@ -1,0 +1,11 @@
+Models,MAE,MAPE,Time series label,Time
+AutoTs,0.6113153797544688,30.43080324518259,GS10,27.095594600000027
+AutoTs,0.5470949999999994,7.923796027596229,EXCHUS,22.006969400000003
+AutoTs,0.042889620225733324,3.240511772954165,EXCAUS,26.905769799999973
+AutoTs,344.69071783238286,3.6241102923831994,Weekly U.S. Refiner and Blender Adjusted Net Production of Finished Motor Gasoline  (Thousand Barrels per Day),40.89129650000001
+AutoTs,0.14439180209998254,5.5351625300242695,Weekly Minnesota Midgrade Conventional Retail Gasoline Prices  (Dollars per Gallon),24.340286600000013
+AutoTs,3.470588333333331,3.9840681887891076,Weekly U.S. Percent Utilization of Refinery Operable Capacity (Percent),26.634667200000024
+AutoTs,535.4028988417624,6.534305959313327,Weekly U.S. Exports of Crude Oil and Petroleum Products  (Thousand Barrels per Day),32.382396700000015
+AutoTs,242.24236018070525,1.8812243996595222,Weekly U.S. Field Production of Crude Oil  (Thousand Barrels per Day),22.774404000000004
+AutoTs,35797.798592752,1.861322331094359,Weekly U.S. Ending Stocks of Crude Oil and Petroleum Products  (Thousand Barrels),43.17530770000002
+AutoTs,364.05,4.140681451816927,Weekly U.S. Product Supplied of Finished Motor Gasoline  (Thousand Barrels per Day),23.924274800000035
