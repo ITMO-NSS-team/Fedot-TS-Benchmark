@@ -1,0 +1,11 @@
+Models,MAE,MAPE,Time series label,Time
+"['linear', 'ridge', 'knnreg', 'linear', 'knnreg', 'lagged', 'ransac_lin_reg', 'lagged', 'ridge', 'ridge', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged']",0.4583421205135583,18.72032622079338,GS10,76.23842610000008
+"['lasso', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged']",0.15594546170241508,2.356896642900574,EXCHUS,25.794806000000108
+"['ridge', 'ridge', 'lagged', 'lagged']",0.1266863011815865,9.814160224253508,EXCAUS,47.77948749999996
+"['ridge', 'lagged', 'ridge', 'knnreg', 'lagged', 'ridge', 'lagged']",228.29679471708084,2.349132191980302,Weekly U.S. Refiner and Blender Adjusted Net Production of Finished Motor Gasoline  (Thousand Barrels per Day),75.97897319999993
+"['ridge', 'ridge', 'lagged', 'ridge', 'lagged', 'ridge', 'ridge', 'lagged', 'lagged']",0.12563672156449918,4.713678592431148,Weekly Minnesota Midgrade Conventional Retail Gasoline Prices  (Dollars per Gallon),51.297703100000035
+"['ridge', 'ridge', 'ridge', 'lagged', 'lagged']",1.8760571977695188,2.064887226551511,Weekly U.S. Percent Utilization of Refinery Operable Capacity (Percent),37.39362660000006
+"['ridge', 'linear', 'ridge', 'lagged', 'lagged', 'smoothing']",416.9484899334029,5.1246258301271945,Weekly U.S. Exports of Crude Oil and Petroleum Products  (Thousand Barrels per Day),37.36253390000002
+"['lasso', 'ridge', 'lasso', 'ridge', 'ridge', 'ridge', 'lagged', 'lasso', 'lagged', 'ridge', 'lagged', 'lagged', 'ridge', 'lagged']",149.86200794439554,1.2041654605201937,Weekly U.S. Field Production of Crude Oil  (Thousand Barrels per Day),139.82482360000017
+"['ridge', 'ridge', 'lagged', 'ridge', 'ridge', 'linear', 'ridge', 'lagged', 'ridge', 'lagged']",74184.79584002135,3.858787813733268,Weekly U.S. Ending Stocks of Crude Oil and Petroleum Products  (Thousand Barrels),49.10467999999992
+"['ridge', 'knnreg', 'lasso', 'lagged', 'lagged', 'smoothing', 'ridge', 'knnreg', 'lagged', 'lasso', 'ridge', 'lagged', 'lagged', 'smoothing']",305.71540905430635,3.260935220857391,Weekly U.S. Product Supplied of Finished Motor Gasoline  (Thousand Barrels per Day),120.8568901000001

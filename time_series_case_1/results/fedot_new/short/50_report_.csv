@@ -1,0 +1,11 @@
+Models,MAE,MAPE,Time series label,Time
+"['ridge', 'ridge', 'ridge', 'ridge', 'ridge', 'ridge', 'ridge', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged']",0.41587440208679355,21.361897705654155,GS10,30.133052900000166
+"['ridge', 'ridge', 'lagged', 'ridge', 'lagged', 'lagged']",0.86183489714774,12.78604369139413,EXCHUS,32.350284399999964
+"['ridge', 'ridge', 'ridge', 'lagged']",0.0778607496043561,5.9957266070336726,EXCAUS,14.44188800000029
+"['ridge', 'lagged', 'ridge', 'lagged']",246.6526902384827,2.5191306586026063,Weekly U.S. Refiner and Blender Adjusted Net Production of Finished Motor Gasoline  (Thousand Barrels per Day),52.69545900000003
+"['linear', 'ridge', 'ridge', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged', 'lagged']",0.11860346151815448,4.301900017233441,Weekly Minnesota Midgrade Conventional Retail Gasoline Prices  (Dollars per Gallon),58.32554819999996
+"['knnreg', 'ridge', 'lagged', 'ridge', 'ridge', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged']",2.494,2.7398974755781786,Weekly U.S. Percent Utilization of Refinery Operable Capacity (Percent),84.8392644999999
+"['ridge', 'scaling', 'lagged']",600.1417232092581,7.491965134537865,Weekly U.S. Exports of Crude Oil and Petroleum Products  (Thousand Barrels per Day),24.778791000000183
+"['ridge', 'ridge', 'lagged', 'scaling', 'lagged']",582.6405212272502,4.605364620674257,Weekly U.S. Field Production of Crude Oil  (Thousand Barrels per Day),41.5714353000003
+"['knnreg', 'ridge', 'lagged', 'lagged']",45454.156,2.34432268461396,Weekly U.S. Ending Stocks of Crude Oil and Petroleum Products  (Thousand Barrels),53.181367200000295
+"['ridge', 'ridge', 'lagged', 'ridge', 'lagged']",233.05902586592802,2.4772989655894593,Weekly U.S. Product Supplied of Finished Motor Gasoline  (Thousand Barrels per Day),54.10463359999994

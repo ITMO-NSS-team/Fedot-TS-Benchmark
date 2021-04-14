@@ -98,6 +98,49 @@ def plot_forecast(path: str, ts_label: str, forecast_len: int):
     plt.show()
 
 
+def compare_forecasts(mode='short', forecast_len=30):
+    if mode == 'short':
+        ts_labels = get_ts_short_names()
+    elif mode == 'long':
+        ts_labels = get_ts_long_names()
+    else:
+        ValueError(f'Mode {mode} does not exist')
 
+    path_prophet = os.path.join('results/prophet', mode)
+    path_fedot = os.path.join('results/fedot_new', mode)
+    path_autots = os.path.join('results/autots', mode)
 
+    acceptable_name = ''.join((str(forecast_len), '.csv'))
+    forecast_prophet_df = pd.read_csv(os.path.join(path_prophet, acceptable_name))
+    forecast_fedot_df = pd.read_csv(os.path.join(path_fedot, acceptable_name))
+    forecast_autots_df = pd.read_csv(os.path.join(path_autots, acceptable_name))
 
+    for ts_label in ts_labels:
+        # Get predictions only for one time series
+        ts_forecast_prophet = forecast_prophet_df[forecast_prophet_df['series_id'] == ts_label]
+        ts_forecast_fedot = forecast_fedot_df[forecast_fedot_df['series_id'] == ts_label]
+        ts_forecast_autots = forecast_autots_df[forecast_autots_df['series_id'] == ts_label]
+
+        # Get dates
+        ts_forecast_prophet['datetime'] = pd.to_datetime(ts_forecast_prophet['datetime'])
+        dates = list(ts_forecast_prophet['datetime'])
+
+        actual_data = np.array(ts_forecast_prophet['value'])
+        predicted_prophet = np.array(ts_forecast_prophet['Predicted'])
+        predicted_fedot = np.array(ts_forecast_fedot['Predicted'])
+        predicted_autots = np.array(ts_forecast_autots['Predicted'])
+
+        plt.plot(dates, actual_data, c='blue', alpha=0.5, label='Actual')
+        plt.plot(dates[-(forecast_len + 1):], predicted_prophet[-(forecast_len + 1):],
+                 c='green', alpha=0.8, label='Prophet')
+        plt.plot(dates[-(forecast_len + 1):], predicted_autots[-(forecast_len + 1):],
+                 c='orange', alpha=0.8, label='AutoTS')
+        plt.plot(dates[-(forecast_len + 1):], predicted_fedot[-(forecast_len + 1):],
+                 c='red', alpha=1.0, label='FEDOT')
+        # Plot black line which divide our array into train and test
+        plt.plot([dates[-(forecast_len + 1)], dates[-(forecast_len + 1)]],
+                 [min(ts_forecast_prophet['value']), max(ts_forecast_prophet['value'])],
+                 c='black', linewidth=1)
+        plt.grid()
+        plt.legend()
+        plt.show()

@@ -1,0 +1,11 @@
+Models,MAE,MAPE,Time series label,Time
+"['ridge', 'ridge', 'knnreg', 'lagged', 'lagged', 'lagged']",1.039358228270247,55.9661609735164,GS10,34.2931021
+"['lasso', 'ridge', 'lagged', 'ridge', 'linear', 'lagged', 'ridge', 'lagged']",0.2735670967741933,3.9118914558409745,EXCHUS,53.9248104
+"['knnreg', 'knnreg', 'ridge', 'ridge', 'lagged', 'ridge', 'lagged']",0.02673000000000003,2.021567022527134,EXCAUS,25.277073200000004
+"['ridge', 'ridge', 'scaling', 'ridge', 'lagged', 'linear', 'lagged', 'ridge', 'ridge', 'ridge', 'ridge', 'lagged', 'lagged']",456.0911672125991,4.893365748778387,Weekly U.S. Refiner and Blender Adjusted Net Production of Finished Motor Gasoline  (Thousand Barrels per Day),61.4459054
+"['ridge', 'ridge', 'ridge', 'linear', 'lagged', 'ridge', 'scaling', 'lagged', 'ridge', 'lagged', 'linear', 'lagged', 'ridge', 'ridge', 'ridge', 'lagged', 'scaling', 'lagged']",0.15656829241333864,5.944967016827548,Weekly Minnesota Midgrade Conventional Retail Gasoline Prices  (Dollars per Gallon),120.02013750000003
+"['ridge', 'ridge', 'ridge', 'lagged', 'ridge', 'lagged']",1.8575664501545162,2.060359579579422,Weekly U.S. Percent Utilization of Refinery Operable Capacity (Percent),69.56055620000001
+"['lasso', 'ridge', 'lagged', 'ridge', 'lagged', 'scaling', 'ridge', 'lagged', 'lasso', 'lagged']",494.4850090950689,5.324486511155321,Weekly U.S. Exports of Crude Oil and Petroleum Products  (Thousand Barrels per Day),50.78883300000001
+"['ridge', 'linear', 'lagged', 'ridge', 'scaling', 'scaling', 'lasso', 'scaling', 'lagged', 'ridge', 'lagged', 'ridge', 'lagged']",90.12160651319263,0.6985823979023388,Weekly U.S. Field Production of Crude Oil  (Thousand Barrels per Day),69.17220359999999
+"['ridge', 'linear', 'lagged', 'lasso', 'lagged']",31456.144646307734,1.6358140417860938,Weekly U.S. Ending Stocks of Crude Oil and Petroleum Products  (Thousand Barrels),83.68621720000004
+"['lasso', 'ridge', 'lagged', 'ridge', 'lagged']",377.43654323391166,4.378743896636516,Weekly U.S. Product Supplied of Finished Motor Gasoline  (Thousand Barrels per Day),39.233013800000094

@@ -102,3 +102,45 @@ def print_metrics_by_folder(path: str, mode: str):
     print('MEAN METRICS AND TIME FOR ALL TIME SERIES')
     print(f'Mean MAPE value - {dataframe["MAPE"].mean():.2f}')
     print(f'Mean time - {dataframe["Time"].mean():.2f}\n')
+
+
+def make_comparison_for_different_horizons(mode='short',
+                                           path='results/fedot_new',
+                                           forecast_thr: dict = {'patch_min': [10, 20],
+                                                                 'patch_max': [90, 100]}):
+    if mode == 'short':
+        ts_labels = get_ts_short_names()
+        forecast_lens = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+    elif mode == 'long':
+        ts_labels = get_ts_long_names()
+        forecast_lens = list(np.arange(10, 1010, 10))
+    else:
+        ValueError(f'Mode {mode} does not exist')
+
+    full_path = os.path.join(path, mode)
+
+    short_len_mapes = []
+    long_len_mapes = []
+    for forecast_len in forecast_lens:
+        acceptable_name = ''.join((str(forecast_len), '_report_', '.csv'))
+        forecast_df = pd.read_csv(os.path.join(full_path, acceptable_name))
+
+        for ts_label in ts_labels:
+            # Get predictions only for one time series
+            ts_metric = forecast_df[forecast_df['Time series label'] == ts_label]
+            metric = float(ts_metric['MAPE'])
+
+            if forecast_len in forecast_thr.get('patch_min'):
+                short_len_mapes.append(metric)
+            elif forecast_len in forecast_thr.get('patch_max'):
+                long_len_mapes.append(metric)
+
+    # Calculate mean value
+    short_len_mapes = np.array(short_len_mapes)
+    long_len_mapes = np.array(long_len_mapes)
+
+    mean_short_mape = np.mean(short_len_mapes)
+    mean_long_mape = np.mean(long_len_mapes)
+
+    print(f'Short forecast lengths MAPE - {mean_short_mape:.2f}')
+    print(f'Long forecast lengths MAPE - {mean_long_mape:.2f}')
