@@ -1,4 +1,4 @@
-from auto_ts import auto_timeseries
+from auto_pip ts import auto_timeseries
 
 import os
 import timeit
@@ -15,8 +15,8 @@ from pylab import rcParams
 rcParams['figure.figsize'] = 11, 4
 
 # Custom metric functions and function for visualisation
-from analysis.metric_tools import mean_absolute_percentage_error
-from analysis.visualisation_tools import plot_results
+from time_series_case_1.analysis.metric_tools import mean_absolute_percentage_error
+from time_series_case_1.analysis.visualisation_tools import plot_results
 
 
 def run_experiment(dataframe, folder_to_save, l_forecasts, make_forecast_func,
