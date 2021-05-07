@@ -14,4 +14,4 @@ if __name__ == '__main__':
     plot_mape_vs_len(path_long, mode='long')
 
     # Plot forecast for 100 forecast horizon
-    plot_forecast(path=path_long, ts_label='traffic_volume', forecast_len=30)
+    plot_forecast(path=path_long, ts_label='traffic_volume', forecast_len=10)
