@@ -311,7 +311,7 @@ if __name__ == '__main__':
 
     # Lists with forecasts lengths
     l_forecasts_short = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    l_forecasts_long = np.arange(60, 1010, 10)
+    l_forecasts_long = np.arange(280, 1010, 10)
 
     # Launch for short time series
     # run_experiment(path_to_the_short_file, path_to_save_short, l_forecasts_short,

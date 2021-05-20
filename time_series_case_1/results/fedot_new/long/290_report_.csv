@@ -1,0 +1,3 @@
+Models,MAE,MAPE,Time series label,Time
+"['ridge', 'ridge', 'lagged', 'ridge', 'lagged']",7.126935774746424,2.5161574869487335,temp,599.7254713999937
+"['ridge', 'ridge', 'lagged', 'ridge', 'ridge', 'lagged', 'ridge', 'lagged']",240.84159732617573,11.40915644164615,traffic_volume,28426.0858839

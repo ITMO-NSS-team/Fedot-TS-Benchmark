@@ -113,7 +113,7 @@ def make_comparison_for_different_horizons(mode='short',
         forecast_lens = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     elif mode == 'long':
         ts_labels = get_ts_long_names()
-        forecast_lens = list(np.arange(10, 1010, 10))
+        forecast_lens = list(np.arange(10, 210, 10))
     else:
         ValueError(f'Mode {mode} does not exist')
 
@@ -142,5 +142,5 @@ def make_comparison_for_different_horizons(mode='short',
     mean_short_mape = np.mean(short_len_mapes)
     mean_long_mape = np.mean(long_len_mapes)
 
-    print(f'Short forecast lengths MAPE - {mean_short_mape:.2f}')
-    print(f'Long forecast lengths MAPE - {mean_long_mape:.2f}')
+    print(f'Short forecast lengths MAPE - {mean_short_mape:.2f}, ± {np.std(short_len_mapes):.0f}')
+    print(f'Long forecast lengths MAPE - {mean_long_mape:.2f}, ± {np.std(long_len_mapes):.0f}')
