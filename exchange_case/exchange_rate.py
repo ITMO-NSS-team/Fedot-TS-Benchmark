@@ -25,6 +25,16 @@ def top_correlated_series(multi_time_series, currency, num_variables):
     return multi_time_series[to_pick]
 
 
+def lagged_transform(time_series, lag, horizon=1):
+    horizon_shift = horizon - 1
+    Xy = pd.DataFrame(columns=range(lag))
+    for i in range(lag):
+        Xy[i] = time_series[:].shift(-i)
+    Xy['target'] = time_series[:].shift(- lag - horizon_shift)
+
+    return Xy.dropna()
+
+
 def visualize_rates(data_frame):
     plot = sns.lineplot(data=data_frame, dashes=False, )
     plot.set_xlabel('Days')
@@ -41,8 +51,10 @@ def low_scale_only(source_df):
 if __name__ == '__main__':
     exchange = pd.read_csv('../exchange_rate/exchange_rate.txt', header=None)
     exchange.columns = EXCHANGE_LABELS
-    visualize_rates(exchange)
+    # visualize_rates(exchange)
 
     top_5_correlated = top_correlated_series(exchange, currency='Canada', num_variables=5)
+    canada = top_5_correlated[['Canada']]
+    lagged = lagged_transform(canada['Canada'], lag=10, horizon=1)
     # low_scale = low_scale_only(exchange)
-    visualize_rates(top_5_correlated)
+    # visualize_rates(top_5_correlated)
