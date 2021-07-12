@@ -14,6 +14,17 @@ def extract_tar(file_in, file_out):
             shutil.copyfileobj(f_in, f_out)
 
 
+def top_correlated_series(multi_time_series, currency, num_variables):
+    '''
+    Returns the top _num_variables_ series for a given _currency_ (including itself)
+    '''
+
+    corr_values_of_currency = multi_time_series.corr().abs()[currency].sort_values(kind="quicksort",
+                                                                                   ascending=False)
+    to_pick = corr_values_of_currency.index[:num_variables]
+    return multi_time_series[to_pick]
+
+
 def visualize_rates(data_frame):
     plot = sns.lineplot(data=data_frame, dashes=False, )
     plot.set_xlabel('Days')
@@ -32,5 +43,6 @@ if __name__ == '__main__':
     exchange.columns = EXCHANGE_LABELS
     visualize_rates(exchange)
 
-    low_scale = low_scale_only(exchange)
-    visualize_rates(low_scale)
+    top_5_correlated = top_correlated_series(exchange, currency='Canada', num_variables=5)
+    # low_scale = low_scale_only(exchange)
+    visualize_rates(top_5_correlated)
