@@ -1,4 +1,6 @@
 import os
+from collections import Callable
+
 import numpy as np
 import pandas as pd
 
@@ -12,6 +14,10 @@ def mean_absolute_percentage_error(y_true, y_pred):
         y_true[index] = 0.01
     value = np.mean(np.abs((y_true - y_pred) / y_true)) * 100
     return value
+
+
+def smape(y_true, y_pred):
+    return 100 *(2*np.abs((y_true - y_pred)) / (np.abs(y_true) + np.abs(y_pred)))
 
 
 def _create_report_dataframe(folder, time_series='all'):
@@ -34,7 +40,8 @@ def _create_report_dataframe(folder, time_series='all'):
 
     # Read all files
     for index, report_file in enumerate(reports):
-        report_df = pd.read_csv(os.path.join(folder, report_file))
+        report_df = pd.read_csv(os.path.join(folder, report_file),
+                                dtype={'Time series label': str})
 
         if time_series != 'all':
             # Take data only for one time series
@@ -79,14 +86,49 @@ def get_ts_long_names():
     return ts_names
 
 
+def get_ts_tep_names():
+    ts_names = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10',
+                '11', '12', '13', '14', '15', '16', '17', '18', '19', '20',
+                '21', '22', '23', '24', '25', '26', '27', '28', '29', '30',
+                '31', '32', '33', '34', '35', '36', '37', '38', '39', '40']
+    return ts_names
+
+
+def get_ts_smart_names():
+    ts_names = ['use [kW]', 'gen [kW]', 'House overall [kW]', 'Dishwasher [kW]',
+                'Furnace 1 [kW]', 'Furnace 2 [kW]', 'Home office [kW]', 'Fridge [kW]',
+                'Wine cellar [kW]', 'Garage door [kW]', 'Kitchen 12 [kW]', 'Kitchen 14 [kW]',
+                'Barn [kW]', 'Well [kW]', 'Microwave [kW]', 'Living room [kW]',
+                'Solar [kW]', 'temperature', 'humidity', 'visibility']
+    return ts_names
+
+
+def _get_dataset_info(path, mode):
+    if mode == 'short':
+        ts_labels = get_ts_short_names()
+        forecast_lens = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+        full_path = os.path.join(path, mode)
+    elif mode == 'long':
+        ts_labels = get_ts_long_names()
+        forecast_lens = list(np.arange(10, 210, 10))
+        full_path = os.path.join(path, mode)
+    elif mode == 'tep':
+        ts_labels = get_ts_tep_names()
+        forecast_lens = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+        full_path = path
+    elif mode == 'smart':
+        ts_labels = get_ts_smart_names()
+        forecast_lens = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+        full_path = path
+    else:
+        ValueError(f'Mode {mode} does not exist')
+
+    return ts_labels, forecast_lens, full_path
+
+
 def print_metrics_by_folder(path: str, mode: str):
     """ Display MAPE metric and time from report files """
-    if mode == 'short':
-        ts_names = get_ts_short_names()
-    elif mode == 'long':
-        ts_names = get_ts_long_names()
-    else:
-        raise NotImplementedError(f'Mode "{mode}" is not available')
+    ts_names, _, _ = _get_dataset_info(path, mode)
 
     # Get metrics per time series for all short time series
     for ts_name in ts_names:
@@ -108,22 +150,14 @@ def make_comparison_for_different_horizons(mode='short',
                                            path='results/fedot_new',
                                            forecast_thr: dict = {'patch_min': [10, 20],
                                                                  'patch_max': [90, 100]}):
-    if mode == 'short':
-        ts_labels = get_ts_short_names()
-        forecast_lens = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
-    elif mode == 'long':
-        ts_labels = get_ts_long_names()
-        forecast_lens = list(np.arange(10, 210, 10))
-    else:
-        ValueError(f'Mode {mode} does not exist')
-
-    full_path = os.path.join(path, mode)
+    ts_labels, forecast_lens, full_path = _get_dataset_info(path, mode)
 
     short_len_mapes = []
     long_len_mapes = []
     for forecast_len in forecast_lens:
         acceptable_name = ''.join((str(forecast_len), '_report_', '.csv'))
-        forecast_df = pd.read_csv(os.path.join(full_path, acceptable_name))
+        forecast_df = pd.read_csv(os.path.join(full_path, acceptable_name),
+                                  dtype={'Time series label': str})
 
         for ts_label in ts_labels:
             # Get predictions only for one time series
@@ -144,3 +178,50 @@ def make_comparison_for_different_horizons(mode='short',
 
     print(f'Short forecast lengths MAPE - {mean_short_mape:.2f}, ± {np.std(short_len_mapes):.0f}')
     print(f'Long forecast lengths MAPE - {mean_long_mape:.2f}, ± {np.std(long_len_mapes):.0f}')
+
+
+def calculate_new_metric(metric_func: Callable, path: str, mode: str, forecast_thr: dict):
+    """ Function allow calculate new metrics based on stored predictions
+
+    :param metric_func: callable function which will take y_true and y_pred
+    arrays and return metric value
+    :param path: path to the files
+    :param mode: dataset to process
+    :param forecast_thr: dictionary with forecasting thresholds
+    """
+
+    ts_labels, forecast_lens, full_path = _get_dataset_info(path, mode)
+
+    short_metrics = []
+    long_metrics = []
+    # For each forecast horizon we will calculate metric
+    for forecast_len in forecast_lens:
+        if forecast_len in forecast_thr.get('patch_min') or forecast_len in forecast_thr.get('patch_max'):
+            # Process only needed files
+            current_path = os.path.join(full_path, ''.join((str(forecast_len), '.csv')))
+
+            df = pd.read_csv(current_path, dtype={'series_id': str})
+
+            # For each time series in the dataset
+            for ts_label in ts_labels:
+                df_ts = df[df['series_id'] == ts_label]
+                # Clip to validation part
+                df_ts = df_ts.tail(forecast_len)
+
+                preds = np.array(df_ts['Predicted'])
+                actuals = np.array(df_ts['value'])
+
+                metric_value = metric_func(actuals, preds)
+                if forecast_len in forecast_thr.get('patch_min'):
+                    short_metrics.append(metric_value)
+                elif forecast_len in forecast_thr.get('patch_max'):
+                    long_metrics.append(metric_value)
+
+    short_metrics = np.array(short_metrics)
+    long_metrics = np.array(long_metrics)
+
+    mean_short_metric = np.mean(short_metrics)
+    mean_long_metric = np.mean(long_metrics)
+
+    print(f'Short forecast lengths metric - {mean_short_metric:.4f}, ± {np.std(short_metrics):.2f}')
+    print(f'Long forecast lengths metric - {mean_long_metric:.4f}, ± {np.std(long_metrics):.2f}')
