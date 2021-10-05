@@ -1,4 +1,6 @@
-from autots import AutoTS
+from prophet import Prophet
+from prophet.diagnostics import cross_validation
+from prophet.diagnostics import performance_metrics
 
 import os
 import timeit
@@ -33,25 +35,18 @@ def make_forecast(df, len_forecast: int, time_series_label: str):
     :return model_name: name of the model (always 'AutoTS')
     """
 
-    model = AutoTS(forecast_length=len_forecast,
-                   frequency='infer',
-                   prediction_interval=0.9,
-                   ensemble='all',
-                   model_list="superfast",
-                   max_generations=15,
-                   num_validations=2,
-                   validation_method="backwards")
+    df['ds'] = df['datetime']
+    df['y'] = df[time_series_label]
 
-    model = model.fit(df,
-                      date_col='datetime',
-                      value_col=time_series_label)
+    prophet_model = Prophet()
+    prophet_model.fit(df)
 
-    prediction = model.predict()
-    # point forecasts dataframe
-    forecasts_df = prediction.forecast
+    future = prophet_model.make_future_dataframe(periods=len_forecast,
+                                                 include_history=False)
+    forecast = prophet_model.predict(future)
 
-    predicted_values = np.array(forecasts_df[time_series_label])
-    model_name = 'AutoTs'
+    predicted_values = np.array(forecast['yhat'])
+    model_name = 'Prophet'
     return predicted_values, model_name
 
 
@@ -159,17 +154,18 @@ def run_experiment(path, folder_to_save, l_forecasts, vis: bool = False):
 
 if __name__ == '__main__':
     ##########################################################################
-    # Comparison with AutoTs library - https://github.com/winedarksea/AutoTS #
+    #                           Comparison with                              #
+    #         Prophet library - https://facebook.github.io/prophet           #
     ##########################################################################
 
     # Paths to the files
     path_to_file = 'data/home_sensors.csv'
 
     # Paths to the folders with report csv files
-    path_to_save = 'results/autots'
+    path_to_save = 'results/prophet'
 
     # Lists with forecasts lengths
-    l_forecasts = [100]
+    l_forecasts = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 
     # Launch for short time series
     run_experiment(path_to_file,
