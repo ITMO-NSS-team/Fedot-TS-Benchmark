@@ -175,7 +175,7 @@ if __name__ == '__main__':
     path_to_save = 'results/fedot'
 
     # Lists with forecasts lengths
-    l_forecasts = [20, 30, 40, 50, 60, 70, 80, 90, 100]
+    l_forecasts = [40, 50, 60, 70, 80, 90, 100]
 
     # Launch for short time series
     run_experiment(path_to_file,

@@ -7,4 +7,4 @@ if __name__ == '__main__':
                              path=path,
                              mode='tep',
                              forecast_thr={'patch_min': [10],
-                                           'patch_max': [30]})
+                                           'patch_max': [10]})
