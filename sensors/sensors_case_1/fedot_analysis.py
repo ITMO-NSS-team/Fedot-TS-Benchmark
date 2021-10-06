@@ -1,6 +1,7 @@
 from analysis.metric_tools import print_metrics_by_folder, make_comparison_for_different_horizons
 from analysis.visualisation_tools import plot_forecast, plot_mape_vs_len
 
+
 if __name__ == '__main__':
     path = 'results/fedot'
     # Plot forecast for 100 forecast horizon
