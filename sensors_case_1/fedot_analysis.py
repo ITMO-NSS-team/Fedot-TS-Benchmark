@@ -4,7 +4,7 @@ from time_series_case_1.analysis.visualisation_tools import *
 if __name__ == '__main__':
     path = 'results/fedot'
     # Plot forecast for 100 forecast horizon
-    plot_forecast(path=path, ts_label='0', forecast_len=10)
+    plot_forecast(path=path, ts_label='0', forecast_len=100)
 
     make_comparison_for_different_horizons(mode='tep',
                                            path=path,

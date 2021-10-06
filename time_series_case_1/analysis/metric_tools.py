@@ -17,7 +17,7 @@ def mean_absolute_percentage_error(y_true, y_pred):
 
 
 def smape(y_true, y_pred):
-    return 100 *(2*np.abs((y_true - y_pred)) / (np.abs(y_true) + np.abs(y_pred)))
+    return np.mean(100 *(2*np.abs((y_true - y_pred)) / (np.abs(y_true) + np.abs(y_pred))))
 
 
 def _create_report_dataframe(folder, time_series='all'):
@@ -217,8 +217,8 @@ def calculate_new_metric(metric_func: Callable, path: str, mode: str, forecast_t
                 elif forecast_len in forecast_thr.get('patch_max'):
                     long_metrics.append(metric_value)
 
-    short_metrics = np.array(short_metrics)
-    long_metrics = np.array(long_metrics)
+    short_metrics = np.array(short_metrics, dtype=float)
+    long_metrics = np.array(long_metrics, dtype=float)
 
     mean_short_metric = np.mean(short_metrics)
     mean_long_metric = np.mean(long_metrics)

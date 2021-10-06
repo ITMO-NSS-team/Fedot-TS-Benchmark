@@ -6,5 +6,5 @@ if __name__ == '__main__':
         calculate_new_metric(metric_func=smape,
                              path=path,
                              mode='smart',
-                             forecast_thr={'patch_min': [10, 20],
-                                           'patch_max': [30, 40]})
+                             forecast_thr={'patch_min': [10, 20, 30],
+                                           'patch_max': [40, 50]})
