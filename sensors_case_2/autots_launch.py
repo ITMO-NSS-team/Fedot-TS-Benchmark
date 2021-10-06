@@ -2,7 +2,6 @@ from autots import AutoTS
 
 import os
 import timeit
-import itertools
 
 import pandas as pd
 import numpy as np
@@ -11,14 +10,13 @@ import warnings
 warnings.filterwarnings('ignore')
 
 from sklearn.metrics import mean_absolute_error
-from matplotlib import pyplot as plt
 
 from pylab import rcParams
 rcParams['figure.figsize'] = 11, 4
 
 # Custom metric functions and function for visualisation
-from time_series_case_1.analysis.metric_tools import mean_absolute_percentage_error
-from time_series_case_1.analysis.visualisation_tools import plot_results
+from analysis.metric_tools import mean_absolute_percentage_error
+from analysis.visualisation_tools import plot_results
 
 
 def make_forecast(df, len_forecast: int, time_series_label: str):

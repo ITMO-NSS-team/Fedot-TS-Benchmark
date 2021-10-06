@@ -1,18 +1,17 @@
 import os
 from matplotlib import pyplot as plt
-from matplotlib import cm
 import numpy as np
 import pandas as pd
-from sklearn.metrics import mean_absolute_error, mean_squared_error, median_absolute_error
 
 from pylab import rcParams
+
+from analysis.metric_tools import _create_report_dataframe,\
+    get_ts_short_names, get_ts_long_names, get_ts_tep_names, get_ts_smart_names
+
 rcParams['figure.figsize'] = 12, 6
 
 import warnings
 warnings.filterwarnings('ignore')
-
-from time_series_case_1.analysis.metric_tools import _create_report_dataframe, \
-    get_ts_short_names, get_ts_long_names, get_ts_tep_names, get_ts_smart_names
 
 
 def plot_results(actual_time_series, predicted_values, len_train_data,
@@ -117,14 +116,22 @@ def compare_forecasts(mode='short', forecast_len=30):
     else:
         ValueError(f'Mode {mode} does not exist')
 
-    path_prophet = os.path.join('results/prophet', mode)
-    path_fedot = os.path.join('results/fedot_new', mode)
-    path_autots = os.path.join('results/autots', mode)
+    if mode == 'smart' or mode == 'tep':
+        path_prophet = 'results/prophet'
+        path_fedot = 'results/fedot'
+        path_autots = 'results/autots'
+    else:
+        path_prophet = os.path.join('results/prophet', mode)
+        path_fedot = os.path.join('results/fedot_new', mode)
+        path_autots = os.path.join('results/autots', mode)
 
     acceptable_name = ''.join((str(forecast_len), '.csv'))
-    forecast_prophet_df = pd.read_csv(os.path.join(path_prophet, acceptable_name))
-    forecast_fedot_df = pd.read_csv(os.path.join(path_fedot, acceptable_name))
-    forecast_autots_df = pd.read_csv(os.path.join(path_autots, acceptable_name))
+    forecast_prophet_df = pd.read_csv(os.path.join(path_prophet, acceptable_name),
+                                      dtype={'series_id': str})
+    forecast_fedot_df = pd.read_csv(os.path.join(path_fedot, acceptable_name),
+                                    dtype={'series_id': str})
+    forecast_autots_df = pd.read_csv(os.path.join(path_autots, acceptable_name),
+                                     dtype={'series_id': str})
 
     for ts_label in ts_labels:
         # Get predictions only for one time series
@@ -134,7 +141,7 @@ def compare_forecasts(mode='short', forecast_len=30):
 
         # Get dates
         ts_forecast_prophet['datetime'] = pd.to_datetime(ts_forecast_prophet['datetime'])
-        dates = list(ts_forecast_prophet['datetime'])
+        dates = np.arange(0, len(ts_forecast_prophet))
 
         actual_data = np.array(ts_forecast_prophet['value'])
         predicted_prophet = np.array(ts_forecast_prophet['Predicted'])

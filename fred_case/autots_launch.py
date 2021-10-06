@@ -1,11 +1,7 @@
-from fbprophet import Prophet
-from fbprophet.diagnostics import cross_validation
-from fbprophet.diagnostics import performance_metrics
+from autots import AutoTS
 
 import os
 import timeit
-import itertools
-
 import pandas as pd
 import numpy as np
 
@@ -13,19 +9,18 @@ import warnings
 warnings.filterwarnings('ignore')
 
 from sklearn.metrics import mean_absolute_error
-from matplotlib import pyplot as plt
 
 from pylab import rcParams
 rcParams['figure.figsize'] = 11, 4
 
 # Custom metric functions and function for visualisation
-from time_series_case_1.analysis.metric_tools import mean_absolute_percentage_error
-from time_series_case_1.analysis.visualisation_tools import plot_results
+from analysis.metric_tools import mean_absolute_percentage_error
+from analysis.visualisation_tools import plot_results
 
 
 def make_forecast(df, len_forecast: int):
     """
-    Function for making time series forecasting with Prophet library
+    Function for making time series forecasting with AutoTS library
 
     :param df: dataframe to process
     :param len_forecast: forecast length
@@ -34,61 +29,26 @@ def make_forecast(df, len_forecast: int):
     :return model_name: name of the model (always 'AutoTS')
     """
 
-    df['ds'] = df['datetime']
-    df['y'] = df['value']
+    model = AutoTS(forecast_length=len_forecast,
+                   frequency='infer',
+                   prediction_interval=0.9,
+                   ensemble='all',
+                   model_list="superfast",
+                   max_generations=15,
+                   num_validations=2,
+                   validation_method="backwards")
 
-    best_params = find_best_params(df, len_forecast)
-    prophet_model = Prophet(**best_params)
-    prophet_model.fit(df)
+    model = model.fit(df,
+                      date_col='datetime',
+                      value_col='value')
 
-    future = prophet_model.make_future_dataframe(periods=len_forecast,
-                                                 include_history=False)
-    forecast = prophet_model.predict(future)
+    prediction = model.predict()
+    # point forecasts dataframe
+    forecasts_df = prediction.forecast
 
-    predicted_values = np.array(forecast['yhat'])
-    model_name = 'Prophet'
+    predicted_values = np.array(forecasts_df['value'])
+    model_name = 'AutoTs'
     return predicted_values, model_name
-
-
-def find_best_params(df, len_forecast):
-    """ Function find optimal changepoint_prior_scale value for data """
-
-    # Split dataset for validation
-    df_test = df.tail(len_forecast)
-    actual_values = np.array(df_test['y'])
-    df_train = df.head(len(df) - len_forecast)
-
-    changepoint_range = [0.001, 0.05, 0.5]
-    seasonality_range = [0.05, 10]
-    mapes = []
-    changepoints = []
-    seasonality = []
-    for changepoint_prior_scale_param in changepoint_range:
-        for seasonality_prior_scale_param in seasonality_range:
-            params = {'changepoint_prior_scale': changepoint_prior_scale_param,
-                      'seasonality_prior_scale': seasonality_prior_scale_param}
-            m = Prophet(**params).fit(df_train)
-            future = m.make_future_dataframe(periods=len_forecast,
-                                             include_history=False)
-            forecast = m.predict(future)
-            predicted_values = np.array(forecast['yhat'])
-
-            # Calculate MAPE metric
-            current_mape = mean_absolute_percentage_error(predicted_values, actual_values)
-
-            # Update lists with info
-            mapes.append(current_mape)
-            changepoints.append(changepoint_prior_scale_param)
-            seasonality.append(seasonality_prior_scale_param)
-
-    # Find index of the smallest metric value
-    mapes = np.array(mapes)
-    min_id = np.argmin(mapes)
-
-    # Find the best parameters
-    best_params = {'changepoint_prior_scale': changepoints[min_id],
-                   'seasonality_prior_scale': seasonality[min_id]}
-    return best_params
 
 
 def run_experiment(path, folder_to_save, l_forecasts, vis: bool = False):
@@ -180,8 +140,7 @@ def run_experiment(path, folder_to_save, l_forecasts, vis: bool = False):
 
 if __name__ == '__main__':
     ##########################################################################
-    #                           Comparison with                              #
-    #         Prophet library - https://facebook.github.io/prophet           #
+    # Comparison with AutoTs library - https://github.com/winedarksea/AutoTS #
     ##########################################################################
 
     # Paths to the files
@@ -189,21 +148,17 @@ if __name__ == '__main__':
     path_to_the_long_file = 'data/ts_long.csv'
 
     # Paths to the folders with report csv files
-    path_to_save_short = 'results/prophet/short'
-    path_to_save_long = 'results/prophet/long'
+    path_to_save_short = 'results/autots/short'
+    path_to_save_long = 'results/autots/long'
 
     # Lists with forecasts lengths
     l_forecasts_short = [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
     l_forecasts_long = np.arange(10, 1010, 10)
 
     # Launch for short time series
-    run_experiment(path_to_the_short_file,
-                   path_to_save_short,
-                   l_forecasts_short,
+    run_experiment(path_to_the_short_file, path_to_save_short, l_forecasts_short,
                    vis=False)
 
     # Launch for short time series
-    run_experiment(path_to_the_long_file,
-                   path_to_save_long,
-                   l_forecasts_long,
+    run_experiment(path_to_the_long_file, path_to_save_long, l_forecasts_long,
                    vis=False)

@@ -1,4 +1,4 @@
-from time_series_case_1.analysis.metric_tools import *
+from analysis.metric_tools import make_comparison_for_different_horizons
 
 if __name__ == '__main__':
     for path in ['results/fedot_new', 'results/prophet', 'results/autots']:

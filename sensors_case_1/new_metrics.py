@@ -1,4 +1,5 @@
-from time_series_case_1.analysis.metric_tools import calculate_new_metric, smape, mean_absolute_percentage_error
+from analysis.metric_tools import calculate_new_metric, smape
+
 
 if __name__ == '__main__':
     for path in ['results/prophet', 'results/autots', 'results/fedot']:

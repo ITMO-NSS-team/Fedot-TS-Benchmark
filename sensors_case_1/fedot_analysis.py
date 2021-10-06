@@ -1,5 +1,5 @@
-from time_series_case_1.analysis.metric_tools import print_metrics_by_folder, make_comparison_for_different_horizons
-from time_series_case_1.analysis.visualisation_tools import *
+from analysis.metric_tools import print_metrics_by_folder, make_comparison_for_different_horizons
+from analysis.visualisation_tools import plot_forecast, plot_mape_vs_len
 
 if __name__ == '__main__':
     path = 'results/fedot'

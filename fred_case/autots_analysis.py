@@ -1,5 +1,5 @@
-from time_series_case_1.analysis.metric_tools import print_metrics_by_folder
-from time_series_case_1.analysis.visualisation_tools import *
+from analysis.metric_tools import print_metrics_by_folder
+from analysis.visualisation_tools import plot_mape_vs_len, plot_forecast
 
 if __name__ == '__main__':
     path_short = 'results/autots/short'
