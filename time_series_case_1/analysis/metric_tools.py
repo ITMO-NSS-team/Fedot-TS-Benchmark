@@ -95,11 +95,9 @@ def get_ts_tep_names():
 
 
 def get_ts_smart_names():
-    ts_names = ['use [kW]', 'gen [kW]', 'House overall [kW]', 'Dishwasher [kW]',
-                'Furnace 1 [kW]', 'Furnace 2 [kW]', 'Home office [kW]', 'Fridge [kW]',
-                'Wine cellar [kW]', 'Garage door [kW]', 'Kitchen 12 [kW]', 'Kitchen 14 [kW]',
-                'Barn [kW]', 'Well [kW]', 'Microwave [kW]', 'Living room [kW]',
-                'Solar [kW]', 'temperature', 'humidity', 'visibility']
+    ts_names = ['use [kW]', 'House overall [kW]', 'Furnace 1 [kW]',
+                'Garage door [kW]', 'Kitchen 12 [kW]',
+                'temperature', 'humidity', 'visibility']
     return ts_names
 
 

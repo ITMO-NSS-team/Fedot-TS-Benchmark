@@ -1,4 +1,4 @@
-git+git://github.com/nccr-itmo/FEDOT@med#egg=fedoauto-ts==0.0.36
+git+git://github.com/nccr-itmo/FEDOT@params-nodes#egg=fedot
 autots==0.3.0
 fbprophet==0.7.1
 fedot==0.3.0

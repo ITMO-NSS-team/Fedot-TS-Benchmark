@@ -4,9 +4,7 @@ from time_series_case_1.analysis.visualisation_tools import *
 if __name__ == '__main__':
     path = 'results/prophet'
     # Plot forecast for 100 forecast horizon
-    for i in range(0, 40):
-        print(i)
-        plot_forecast(path=path, ts_label=str(i), forecast_len=100)
+    plot_forecast(path=path, ts_label='9', forecast_len=100)
 
     # print('------ Info about time series processing ------')
     print_metrics_by_folder(path, mode='tep')

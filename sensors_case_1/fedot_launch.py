@@ -1,6 +1,3 @@
-from fedot.api.main import Fedot
-from fedot.core.data.data import InputData
-
 import os
 import timeit
 import pandas as pd
@@ -176,7 +173,7 @@ if __name__ == '__main__':
     path_to_save = 'results/fedot'
 
     # Lists with forecasts lengths
-    l_forecasts = [40, 50, 60, 70, 80, 90, 100]
+    l_forecasts = [90, 100]
 
     # Launch for short time series
     run_experiment(path_to_the_file, path_to_save, l_forecasts,

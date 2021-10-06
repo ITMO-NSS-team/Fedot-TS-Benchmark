@@ -4,7 +4,7 @@ from time_series_case_1.analysis.visualisation_tools import *
 if __name__ == '__main__':
     path = 'results/fedot'
     # Plot forecast for 100 forecast horizon
-    plot_forecast(path=path, ts_label='temperature', forecast_len=30)
+    plot_forecast(path=path, ts_label='Furnace 2 [kW]', forecast_len=100)
 
     # print('------ Info about time series processing ------')
     print_metrics_by_folder(path, mode='smart')
