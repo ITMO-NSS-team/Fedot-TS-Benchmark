@@ -221,5 +221,56 @@ def calculate_new_metric(metric_func: Callable, path: str, mode: str, forecast_t
     mean_short_metric = np.mean(short_metrics)
     mean_long_metric = np.mean(long_metrics)
 
-    print(f'Short forecast lengths metric - {mean_short_metric:.4f}, ± {np.std(short_metrics):.2f}')
-    print(f'Long forecast lengths metric - {mean_long_metric:.4f}, ± {np.std(long_metrics):.2f}')
+    print(f'Short forecast lengths metric - {mean_short_metric:.1f} ± {np.std(short_metrics):.0f}')
+    print(f'Long forecast lengths metric - {mean_long_metric:.1f} ± {np.std(long_metrics):.0f}')
+
+
+def calculate_quantiles_metric(metric_func: Callable, path: str, mode: str, forecast_thr: dict):
+    """ Function allow calculate new metrics based on stored predictions and display as quantiles
+
+    :param metric_func: callable function which will take y_true and y_pred
+    arrays and return metric value
+    :param path: path to the files
+    :param mode: dataset to process
+    :param forecast_thr: dictionary with forecasting thresholds
+    """
+    ts_labels, forecast_lens, full_path = _get_dataset_info(path, mode)
+
+    short_metrics = []
+    long_metrics = []
+    # For each forecast horizon we will calculate metric
+    for forecast_len in forecast_lens:
+        if forecast_len in forecast_thr.get(
+                'patch_min') or forecast_len in forecast_thr.get('patch_max'):
+            # Process only needed files
+            current_path = os.path.join(full_path,
+                                        ''.join((str(forecast_len), '.csv')))
+
+            df = pd.read_csv(current_path, dtype={'series_id': str})
+
+            # For each time series in the dataset
+            for ts_label in ts_labels:
+                df_ts = df[df['series_id'] == ts_label]
+                # Clip to validation part
+                df_ts = df_ts.tail(forecast_len)
+
+                preds = np.array(df_ts['Predicted'])
+                actuals = np.array(df_ts['value'])
+
+                metric_value = metric_func(actuals, preds)
+                if forecast_len in forecast_thr.get('patch_min'):
+                    short_metrics.append(metric_value)
+                elif forecast_len in forecast_thr.get('patch_max'):
+                    long_metrics.append(metric_value)
+
+    short_metrics = np.array(short_metrics, dtype=float)
+    long_metrics = np.array(long_metrics, dtype=float)
+
+    median_short_metric = np.median(short_metrics)
+    median_long_metric = np.median(long_metrics)
+
+    short_quantiles = np.quantile(short_metrics, [0.1, 0.9])
+    long_quantiles = np.quantile(long_metrics, [0.1, 0.9])
+
+    print(f'Short forecast lengths metric - {short_quantiles[0]:.1f}/{median_short_metric:.1f}/{short_quantiles[1]:.1f}')
+    print(f'Long forecast lengths metric - {long_quantiles[0]:.1f}/{median_long_metric:.1f}/{long_quantiles[1]:.1f}')
