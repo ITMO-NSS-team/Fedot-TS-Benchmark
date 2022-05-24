@@ -70,7 +70,8 @@ def run_experiment(path, folder_to_save, l_forecasts, vis: bool = False):
         all_mapes = []
         all_labels = []
         all_times = []
-        for index, time_series_label in enumerate(df.columns[:-1]):
+        labels = [9 for _ in range(30)]
+        for index, time_series_label in enumerate(labels):
             time_series_df = df[['datetime', time_series_label]]
             # Clip time series
             time_series_df = time_series_df.tail(3000)

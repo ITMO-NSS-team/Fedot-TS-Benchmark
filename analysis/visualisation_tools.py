@@ -134,6 +134,7 @@ def compare_forecasts(mode='short', forecast_len=30):
                                      dtype={'series_id': str})
 
     for ts_label in ts_labels:
+        print(f'Processing time series {ts_label}')
         # Get predictions only for one time series
         ts_forecast_prophet = forecast_prophet_df[forecast_prophet_df['series_id'] == ts_label]
         ts_forecast_fedot = forecast_fedot_df[forecast_fedot_df['series_id'] == ts_label]

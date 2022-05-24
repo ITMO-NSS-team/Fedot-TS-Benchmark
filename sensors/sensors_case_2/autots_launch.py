@@ -78,7 +78,8 @@ def run_experiment(path, folder_to_save, l_forecasts, vis: bool = False):
         all_mapes = []
         all_labels = []
         all_times = []
-        for index, time_series_label in enumerate(df.columns[1:24]):
+        labels = ['Furnace 1 [kW]' for _ in range(30)]
+        for index, time_series_label in enumerate(labels):
             if time_series_label in ['icon', 'summary', 'Kitchen 38 [kW]']:
                 pass
             else:
@@ -161,13 +162,13 @@ if __name__ == '__main__':
     ##########################################################################
 
     # Paths to the files
-    path_to_file = 'data/home_sensors.csv'
+    path_to_file = '../../data/home_sensors.csv'
 
     # Paths to the folders with report csv files
     path_to_save = 'results/autots'
 
     # Lists with forecasts lengths
-    l_forecasts = [100]
+    l_forecasts = [50]
 
     # Launch for short time series
     run_experiment(path_to_file,
