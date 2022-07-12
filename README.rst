@@ -1,4 +1,4 @@
-FEDOT Timeseries benchmarking
+FEDOT Timeseries benchmarking  [OBSOLETE, see `pytsbe <https://github.com/ITMO-NSS-team/pytsbe>`__ for actual examples]
 ============
 
 The repository contains some experiments and benchmarks of our AutoML framework
